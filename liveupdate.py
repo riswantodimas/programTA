@@ -8,11 +8,12 @@ ax1 = fig.add_subplot(1,1,1)
 xar = []
 yar = []
 n=0
+xinit=time.time()
 
 def animate(i):
-    xar.append(i)
     yar.append(np.random.randint(20))
+    xar.append(time.time()-xinit)
     ax1.clear()
     ax1.plot(xar,yar)
-ani = animation.FuncAnimation(fig, animate, interval=1000)
+ani = animation.FuncAnimation(fig, animate, interval=910)
 plt.show()

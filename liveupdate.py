@@ -5,40 +5,39 @@ import time
 
 fig = plt.figure()
 ax1 = plt.subplot(1,1,1)
+ax2 = ax1.twinx()
+ax2.get_shared_y_axes().join(ax1,ax2)
 
-xar = []
-yar = []
-for q in range(20,0,-1):
+
+xar  = []
+yar1 = []
+yar2 = []
+""""for q in range(20,0,-1):
     xar.insert(q,q)
-    yar.insert(q,0)
+    yar.insert(q,0)"""
 xinit=time.time()
 
 
-"""def appendgraph(i):
-    yar.append(np.random.randint(20))
+def appendgraph(i):
+    yar1.append(np.random.randint(20))
+    yar2.append(np.random.randint(20))
     xar.append(time.time()-xinit)
     ax1.clear()
-    ax1.plot(xar,yar)
-    ax1.set_autoscaley_on(False)
-    plt.ylim((0,20))
-    print(xar)
-    print(yar)"""
+    ax2.clear()
+    ax1.plot(xar,yar1,"b-")
+    ax2.plot(xar,yar2,"r-")
+    ax2.spines["left"].set_visible(False)
+    ax1.spines["bottom"].set_visible(False)
+    ax1.tick_params(axis='both', direction='out')
+    ax1.get_xaxis().tick_bottom()   # remove unneeded ticks 
+    ax1.get_yaxis().tick_left()
+    #ax1.set_autoscaley_on(False)
+    #plt.ylim((0,20))
+    #print(xar)
+    #print(yar)
 
-def movegraph(i):
-    for n in range(19,0,-1):
-        yar.insert(n,yar.pop(n-1))
-        xar.insert(n,xar.pop(n-1))
-    yar[0]=np.random.randint(20)
-    xar[0]=time.time()-xinit
-    #xar.append(time.time()-xinit)
-    ax1.clear()
-    ax1.plot(xar,yar)
-    ax1.set_autoscaley_on(False)
-    plt.ylim((0,20))
-    plt.xlim([min(xar),max(xar)])
-    print(xar)
 
-ani = animation.FuncAnimation(fig, movegraph, interval=910)
+ani = animation.FuncAnimation(fig, appendgraph, interval=900)
 
 plt.show()
 

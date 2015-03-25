@@ -3,6 +3,9 @@ import json
 import sys
 import logging
 import socket
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import time
 
 #Getting IP Address
 ipAddress=[(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]
@@ -49,6 +52,31 @@ def get_traffic(node, port):
     traffic['transmit']=traffic_content['node-connector'][0]['opendaylight-port-statistics:flow-capable-node-connector-statistics']['bytes']['transmitted']
     traffic['receive']=traffic_content['node-connector'][0]['opendaylight-port-statistics:flow-capable-node-connector-statistics']['bytes']['received']
     return traffic
+
+"""def appendgraph(i):
+    yar.append(lib.get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['transmit'])
+    xar.append(time.time()-xinit)
+    ax1.clear()
+    ax1.plot(xar,yar)
+    print(yar[len(yar)-1])"""
+
+def draw(allNodes,n,p):
+    fig = plt.figure()
+    ax1 = plt.subplot(1,1,1)
+
+    xar = []
+    yar = []
+    xinit=time.time()
+
+    def appendgraph(i):
+        yar.append(get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['transmit'])
+        xar.append(time.time()-xinit)
+        ax1.clear()
+        ax1.plot(xar,yar)
+        print(yar[len(yar)-1])
+
+    ani = animation.FuncAnimation(fig, appendgraph, interval=910)
+    plt.show()
 
 
 

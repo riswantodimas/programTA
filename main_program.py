@@ -27,12 +27,3 @@ print("Anda memilih port %s"%allNodes[n-1]['port'][p-1])
 print("\nData trafik untuk port %s pada node %s"%(allNodes[n-1]['port'][p-1],allNodes[n-1]['id']))
 
 lib.draw(allNodes,n,p)
-
-#Printing Data
-"""try:
-    while True:
-        traffic_info=lib.get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])
-        print('Transmitted: %i bytes, Received: %i bytes'%(traffic_info['transmit'],traffic_info['receive']))
-        time.sleep(2)
-except KeyboardInterrupt:
-    pass"""

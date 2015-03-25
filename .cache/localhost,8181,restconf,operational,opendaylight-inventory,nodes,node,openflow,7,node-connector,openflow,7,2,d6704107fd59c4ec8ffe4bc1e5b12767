@@ -1,0 +1,6 @@
+status: 200
+server: Jetty(8.1.14.v20131031)
+content-type: application/yang.data+json
+content-location: http://localhost:8181/restconf/operational/opendaylight-inventory:nodes/node/openflow:7/node-connector/openflow:7:2
+
+{"node-connector":[{"id":"openflow:7:2","flow-node-inventory:current-feature":"copper ten-gb-fd","flow-node-inventory:advertised-features":"","flow-node-inventory:state":{"link-down":false,"live":false,"blocked":false},"flow-node-inventory:port-number":"2","flow-node-inventory:name":"s7-eth2","flow-node-inventory:supported":"","flow-node-inventory:peer-features":"","flow-node-inventory:hardware-address":"F6:64:89:37:A7:6E","flow-node-inventory:configuration":"","opendaylight-port-statistics:flow-capable-node-connector-statistics":{"transmit-errors":0,"bytes":{"transmitted":579679,"received":47982},"receive-errors":0,"duration":{},"receive-drops":0,"receive-crc-error":0,"packets":{"transmitted":2820,"received":501},"collision-count":0,"receive-over-run-error":0,"transmit-drops":0,"receive-frame-error":0},"address-tracker:addresses":[{"id":0,"last-seen":1427275984350,"first-seen":1427275984350,"ip":"10.0.0.8","mac":"3a:05:c1:27:f9:4c"}]}]}

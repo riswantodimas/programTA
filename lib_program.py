@@ -63,17 +63,23 @@ def get_traffic(node, port):
 def draw(allNodes,n,p):
     fig = plt.figure()
     ax1 = plt.subplot(1,1,1)
+    ax2 = ax1.twinx()
+    ax2.get_shared_y_axes().join(ax1,ax2)
 
-    xar = []
-    yar = []
-    xinit=time.time()
+    timex = []
+    transmity = []
+    receivey = []
+    time_init=time.time()
 
     def appendgraph(i):
-        yar.append(get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['transmit'])
-        xar.append(time.time()-xinit)
+        transmity.append(get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['transmit'])
+        receivey.append(get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['receive'])
+        timex.append(time.time()-time_init)
         ax1.clear()
-        ax1.plot(xar,yar)
-        print(yar[len(yar)-1])
+        ax2.clear
+        ax1.plot(timex,transmity,"r-")
+        ax2.plot(timex,receivey,"b-")
+        #print(yar[len(yar)-1])
 
     ani = animation.FuncAnimation(fig, appendgraph, interval=910)
     plt.show()

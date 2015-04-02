@@ -19,9 +19,18 @@ xinit=time.time()
 
 
 def appendgraph(i):
-    yar1.append(np.random.randint(20))
-    yar2.append(np.random.randint(20))
-    xar.append(time.time()-xinit)
+    if len(yar1)<20 and len(yar2)<20:
+        yar1.append(np.random.randint(20))
+        yar2.append(np.random.randint(20))
+        xar.append(time.time()-xinit)
+    else:
+        for i in range(0,19):
+            yar1.insert(i,yar1.pop(i+1))
+            yar2.insert(i,yar2.pop(i+1))
+            xar.insert(i,xar.pop(i+1))
+        yar1[19]=np.random.randint(20)
+        yar2[19]=np.random.randint(20)
+        xar[19]=time.time()-xinit  
     ax1.clear()
     ax2.clear()
     ax1.plot(xar,yar1,"b-")
@@ -31,8 +40,12 @@ def appendgraph(i):
     ax1.tick_params(axis='both', direction='out')
     ax1.get_xaxis().tick_bottom()   # remove unneeded ticks 
     ax1.get_yaxis().tick_left()
-    #ax1.set_autoscaley_on(False)
-    #plt.ylim((0,20))
+    ax1.set_autoscaley_on(False)
+    plt.ylim((0,20))
+    if len(xar)<20:
+        plt.xlim((0,20))
+    else:
+        plt.xlim((min(xar),max(xar)))
     #print(xar)
     #print(yar)
 

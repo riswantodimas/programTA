@@ -1,0 +1,6 @@
+status: 200
+content-type: application/yang.data+json
+content-location: http://localhost:8181/restconf/operational/opendaylight-inventory:nodes/node/openflow:2/node-connector/openflow:2:3
+server: Jetty(8.1.14.v20131031)
+
+{"node-connector":[{"id":"openflow:2:3","stp-status-aware-node-connector:status":"forwarding","flow-node-inventory:current-feature":"copper ten-gb-fd","flow-node-inventory:advertised-features":"","flow-node-inventory:state":{"link-down":false,"live":false,"blocked":false},"flow-node-inventory:port-number":"3","flow-node-inventory:name":"s2-eth3","flow-node-inventory:supported":"","flow-node-inventory:peer-features":"","flow-node-inventory:hardware-address":"AA:00:94:33:8A:7A","flow-node-inventory:configuration":"","opendaylight-port-statistics:flow-capable-node-connector-statistics":{"transmit-errors":0,"bytes":{"transmitted":66769,"received":134763},"receive-errors":0,"duration":{},"receive-drops":0,"receive-crc-error":0,"packets":{"transmitted":398,"received":752},"collision-count":0,"receive-over-run-error":0,"transmit-drops":0,"receive-frame-error":0}}]}

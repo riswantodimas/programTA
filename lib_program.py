@@ -71,17 +71,33 @@ def draw(allNodes,n,p):
     receivey = []
     time_init=time.time()
 
-    def appendgraph(i):
-        transmity.append(get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['transmit'])
-        receivey.append(get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['receive'])
-        timex.append(time.time()-time_init)
+    def makegraph(i):
+        if len(timex)>=20:
+            for i in range(0,19):
+                transmity.insert(i,transmity.pop(i+1))
+                receivey.insert(i,receivey.pop(i+1))
+                timex.insert(i,timex.pop(i+1))
+            transmity[19]=get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['transmit']
+            receivey[19]=get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['receive']
+            timex[19]=time.time()-time_init
+        else:
+            transmity.append(get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['transmit'])
+            receivey.append(get_traffic(allNodes[n-1]['id'],allNodes[n-1]['port'][p-1])['receive'])
+            timex.append(time.time()-time_init)
         ax1.clear()
         ax2.clear
         ax1.plot(timex,transmity,"r-")
         ax2.plot(timex,receivey,"b-")
+        if len(timex)<20:
+            plt.xlim((0,20))
+        else:
+            plt.xlim((min(timex),max(timex)))
+        diff=max(max(transmity),max(receivey))-min(min(transmity),min(receivey))
+        
+        plt.ylim(min(min(transmity),min(receivey))-0.1*diff,max(max(transmity),max(receivey))+0.1*diff)
         #print(yar[len(yar)-1])
 
-    ani = animation.FuncAnimation(fig, appendgraph, interval=910)
+    ani = animation.FuncAnimation(fig, makegraph, interval=910)
     plt.show()
 
 

@@ -42,6 +42,12 @@ def get_topo():
         for tp in node['termination-point']:
             node_info['port'].append(tp['tp-id'])
         Nodes.append(node_info)
+    
+
+    Nodesort=[(int(node['id'].strip(node['id'][:9])), node) for node in Nodes]
+    Nodesort.sort()
+    Nodes=[node for (key,node) in Nodesort]
+    ##print(Nodes)
     return Nodes
 
 #Getting first Traffic Data

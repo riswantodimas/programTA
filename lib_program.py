@@ -68,7 +68,8 @@ def get_traffic(node, port):
     print(yar[len(yar)-1])"""
 
 def draw(allNodes,n,p):
-    traf_fig = plt.figure(1)
+    traf_fig = plt.figure()
+    traf_fig.suptitle('Traffic Graph', fontweight='bold')
 
     ax_transmit = plt.subplot(1,1,1)
     ax_receive = ax_transmit.twinx()
@@ -97,20 +98,25 @@ def draw(allNodes,n,p):
         ax_transmit.plot(x_time,y_transmit,"r-")
         ax_receive.plot(x_time,y_receive,"b-")
         if len(x_time)<20:
-            plt.xlim((0,20))
+            ax_transmit.set_xlim([0,20])
         else:
-            plt.xlim((min(x_time),max(x_time)))
+            ax_transmit.set_xlim((min(x_time),max(x_time)))
         diff=max(max(y_transmit),max(y_receive))-min(min(y_transmit),min(y_receive))
         
-        plt.ylim(min(min(y_transmit),min(y_receive))-0.1*diff,max(max(y_transmit),max(y_receive))+0.1*diff)
+        ax_transmit.set_ylim(min(min(y_transmit),min(y_receive))-0.1*diff,max(max(y_transmit),max(y_receive))+0.1*diff)
         #print(yar[len(yar)-1])
 
-    ani = animation.FuncAnimation(traf_fig, traffic_graph, interval=910)
+    traf_ani = animation.FuncAnimation(traf_fig, traffic_graph, interval=910)
 
-    dif_fig =plt.figure(2)
+    dif_fig =plt.figure()
+    dif_fig.suptitle('Traffic Difference Graph', fontweight='bold')
+    
     ax_diftrans=plt.subplot(1,1,1)
+    ax_difrec = ax_diftrans.twinx()
+    ax_receive.get_shared_y_axes().join(ax_diftrans,ax_difrec)
     
     y_diftrans=[]
+    y_difrec=[]
     x_diftime=[]
     
     def diftraf_graph(i):
@@ -119,21 +125,38 @@ def draw(allNodes,n,p):
         dif=0
         if q==10:
             if len(y_transmit)<20:
-                for r in range (0,10):
-                    dif=dif+y_transmit[r]
+                y_diftrans.append(y_transmit[9]-y_transmit[0])
+                y_difrec.append(y_receive[9]-y_receive[0])
                 x_diftime.append(x_time[9])
             else:
-                for r in range(10,20):
-                    dif=dif+y_transmit[r]
-                x_diftime.append(x_time[19])
-            print(dif)
-            y_diftrans.append(dif)
+                if len(x_diftime)>=10:
+                    for i in range(0,9):
+                        y_diftrans.insert(i,y_diftrans.pop(i+1))
+                        y_difrec.insert(i,y_difrec.pop(i+1))
+                        x_diftime.insert(i,x_diftime.pop(i+1))
+                    y_diftrans[9]=y_transmit[19]-y_transmit[10]
+                    y_difrec[9]=y_receive[19]-y_receive[10]
+                    x_diftime[9]=x_time[19]
+                else:
+                    y_diftrans.append(y_transmit[19]-y_transmit[10])
+                    y_difrec.append(y_receive[19]-y_receive[10])
+                    x_diftime.append(x_time[19])
             q=0
+            
         ax_diftrans.clear()
-        ax_diftrans.plot(x_diftime,y_diftrans)
+        ax_difrec.clear()
+        ax_diftrans.plot(x_diftime,y_diftrans,"r-")
+        ax_difrec.plot(x_diftime,y_difrec,"b-")
+
+        if len(x_time)<10:
+            ax_transmit.set_xlim([0,200])
+        else:
+            ax_diftrans.set_xlim((min(x_diftime),max(x_diftime)))
+            dif_scale=max(max(y_diftrans),max(y_difrec))-min(min(y_diftrans),min(y_difrec))
+            ax_transmit.set_ylim(min(min(y_diftrans),min(y_difrec))-0.1*dif_scale,max(max(y_diftrans),max(y_difrec))+0.1*dif_scale)
 
     
-    ani2 = animation.FuncAnimation(dif_fig, diftraf_graph, interval=910)
+    dif_ani = animation.FuncAnimation(dif_fig, diftraf_graph, interval=910)
     plt.show()
 
 

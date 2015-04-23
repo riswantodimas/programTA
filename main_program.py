@@ -4,6 +4,7 @@ import matplotlib.animation as animation
 import time
 
 allNodes = lib.get_topo()
+print(allNodes)
 
 #Getting User Input Node
 i=1
